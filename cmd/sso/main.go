@@ -4,6 +4,7 @@ import (
 	"log/slog"
 	"os"
 
+	"github.com/Karanth1r3/grpc_learn/internal/app"
 	"github.com/Karanth1r3/grpc_learn/internal/config"
 )
 
@@ -24,9 +25,10 @@ func main() {
 
 	log.Info("starting app", slog.String("env", cfg.Env))
 
-	// TODO : init logger
-
 	// TODO : init app (app entry point package)
+	application := app.New(log, cfg.GRPC.Port, cfg.DB, cfg.TokenTTL)
+
+	application.GRPCSrv.MustRun()
 
 	// TODO : init grpc-service of app
 }

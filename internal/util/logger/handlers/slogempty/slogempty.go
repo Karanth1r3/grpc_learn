@@ -7,7 +7,7 @@ import (
 
 // CTOR for empty slog logger
 func NewEmptyLogger() *slog.Logger {
-	return slog.New(NewEmptyHanlder)
+	return slog.New(NewEmptyHanlder())
 }
 
 // EmptyHandler should implement slog.Handler to be passed into NewEmptyLogger()
