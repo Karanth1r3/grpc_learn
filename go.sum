@@ -1,2 +1,5 @@
 github.com/Karanth1r3/proto3_learn v0.0.0-20240210130920-7c28926df125 h1:SkTbc/5a/tR8T9QzSQ6akWfe+Zg61jdo7Rn++IVgeCc=
 github.com/Karanth1r3/proto3_learn v0.0.0-20240210130920-7c28926df125/go.mod h1:Uk7re24hzqD2aCp4i+hAb5FwVMQebFEis8Jcb6egt8I=
+gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
+gopkg.in/yaml.v2 v2.4.0 h1:D8xgwECY7CYvx+Y2n4sBz93Jn9JRvxdiyyo8CTfuKaY=
+gopkg.in/yaml.v2 v2.4.0/go.mod h1:RDklbk79AGWmwhnvt/jBztapEOGDOx6ZbXqjP6csGnQ=

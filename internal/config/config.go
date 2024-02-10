@@ -31,11 +31,19 @@ type (
 )
 
 // Parse config from yaml file.
-func Parse(fileName string) (*Config, error) {
-	data, err := os.ReadFile(fileName)
+func Parse() (*Config, error) {
+	path, exists := os.LookupEnv("CONFIG_PATH")
+	if !exists {
+		return nil, fmt.Errorf("could not find config file path in environment")
+	}
+	data, err := os.ReadFile(path)
 	if err != nil {
 		return nil, fmt.Errorf("failed to read config from yaml file: %w", err)
 	}
 	cfg := Config{}
-	err = yaml.Unmarshal(data)
+	err = yaml.Unmarshal(data, &cfg)
+	if err != nil {
+		return nil, fmt.Errorf("could not unmarshal cofig from yaml file: %w", err)
+	}
+	return &cfg, nil
 }
