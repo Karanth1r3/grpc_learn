@@ -2,10 +2,12 @@ package config
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"time"
 
-	"gopkg.in/yaml.v2"
+	"github.com/ilyakaznacheev/cleanenv"
+	"github.com/joho/godotenv"
 )
 
 type (
@@ -25,25 +27,35 @@ type (
 	}
 
 	GRPCConfig struct {
-		Port    int `yaml:"port"`
-		Timeout int `yaml:"timeout"`
+		Port    int           `yaml:"port"`
+		Timeout time.Duration `yaml:"timeout"`
 	}
 )
 
 // Parse config from yaml file.
 func Parse() (*Config, error) {
-	path, exists := os.LookupEnv("CONFIG_PATH")
-	if !exists {
-		return nil, fmt.Errorf("could not find config file path in environment")
-	}
-	data, err := os.ReadFile(path)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read config from yaml file: %w", err)
-	}
+
+	path := fetchConfigPath()
+
 	cfg := Config{}
-	err = yaml.Unmarshal(data, &cfg)
+	err := cleanenv.ReadConfig(path, &cfg)
 	if err != nil {
 		return nil, fmt.Errorf("could not unmarshal cofig from yaml file: %w", err)
 	}
 	return &cfg, nil
+}
+
+func fetchConfigPath() string {
+	res, exists := os.LookupEnv("CONFIG_PATH")
+	if !exists {
+		panic("could not find config file")
+	}
+	return res
+}
+
+// init in config is for loading env variables from env file
+func init() {
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found")
+	}
 }
